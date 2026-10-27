@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Digital Verification System</title>
+  <script src="https://unpkg.com/html5-qrcode"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #0f172a;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin-bottom: 8px;
+      color: #38bdf8;
+    }
+
+    p {
+      color: #94a3b8;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    #reader {
+      width: 100%;
+      max-width: 400px;
+      background: #1e293b;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 2px solid #334155;
+    }
+
+    .result-card {
+      margin-top: 20px;
+      width: 100%;
+      max-width: 400px;
+      padding: 15px;
+      background: #1e293b;
+      border-radius: 8px;
+      display: none;
+    }
+
+    .result-card.success {
+      border: 1px solid #22c55e;
+    }
+
+    .result-card h3 {
+      color: #22c55e;
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .result-card p {
+      color: #f8fafc;
+      font-size: 13px;
+      word-break: break-all;
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Digital Access Verification</h1>
+  <p>Scan visitor QR code to verify system access</p>
+
+  <div id="reader"></div>
+
+  <div id="result" class="result-card">
+    <h3 id="status">✅ Verified Entry</h3>
+    <p id="code-content">Data: --</p>
+  </div>
+
+  <script>
+    function onScanSuccess(decodedText, decodedResult) {
+      document.getElementById('result').style.display = 'block';
+      document.getElementById('result').classList.add('success');
+      document.getElementById('code-content').innerText = "Verified Token: " + decodedText;
+    }
+
+    let html5QrcodeScanner = new Html5QrcodeScanner(
+      "reader", { fps: 10, qrbox: 250 }
+    );
+    html5QrcodeScanner.render(onScanSuccess);
+  </script>
+
+</body>
+</html>
